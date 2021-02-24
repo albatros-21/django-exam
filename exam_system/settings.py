@@ -135,4 +135,4 @@ EMAIL_HOST_PASSWORD = 'bahars@'
 EMAIL_PORT = 587
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')

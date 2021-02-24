@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <title>
+                {% for st in student %}
+                    {{ st.first_name }} {{ st.last_name }} - Home
+                {% endfor %}
+        </title>
+
+        {% load static %}
+
+        <!-- Main CSS-->
+        <link href="{% static 'exam/css/mark.css' %}" rel="stylesheet" media="all">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <!-- Font special for pages-->
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    </head>
+
+    <body>
+        <div class="oes-masthead">
+            <div class="container">
+                <nav class="nav">
+                    <div class="navbar-brand">College Name</div>
+                    <a class="nav-link" href="#">{{ username }}</a>
+                    <a class="nav-link" href="{% url 'user:logout' %}">Logout</a>
+                </nav>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+
+            <div class="row">
+                
+                <div class="col-sm-3" >
+                    <div class="side-bar-wrapper">
+                        {% for st in student %}
+                            <p class="student-name">{{ st.first_name }} {{ st.last_name }} </p>
+                            <p class="student-year">{{ st.year }} </p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col-sm-9" >
+                    <div class="page-wrapper">
+                        <div class="card-body">
+                            <!-- <p class="display-4">You scored:</p> -->
+                            <br>
+                                <br>
+                                {% for ex in exam %}
+                                <div class="exam-tag">
+                                    <a class="exam-name" href="{% url 'exam:main' %}"> {{ ex.exam_name }} </a>
+                                    <br>
+                                    <br>
+                                    <p> You scored {{ mark }}/{{ ex.total_marks }}</p>
+                                    <div class="option-buttons">
+                                        <a href="{% url 'exam:generate_pdf' exam=ex.id %}" class="btn btn-primary btn-left">Download</a>
+                                        {% for st in student %}
+                                        <a href="{% url 'exam:review_exam' exam=ex.id student=st.id %}" class="btn btn-danger btn-right">Review</a>
+                                        {% endfor %}
+                                    </div>
+                                    <!-- <p> Starts on : {{ ex.start_date_time }}</p> -->
+                                </div>
+                                {% endfor %}
+                                <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+        
+
+

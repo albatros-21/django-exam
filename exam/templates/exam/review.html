@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
+        <!-- Font special for pages-->
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+        <title>
+            Exam
+        </title>
+
+        {% load static %}
+        <link href="{% static 'exam/css/review.css' %}" rel="stylesheet" media="all">
+    </head>
+    <body >
+        <div class="oes-masthead">
+            <div class="container">
+                <nav class="nav">
+                    <div class="navbar-brand">College Name</div>
+                </nav>
+            </div>
+        </div>
+        
+        <div class="student-details">
+            <div class='container-fluid'>
+              <div class="row student-row">
+                  {% for st in student %}
+              <div class="col-sm-8">
+                  <p class="detail-fields"> Name: {{ st.first_name }} {{ st.last_name }}</p>
+                  <p class="detail-fields"> Year: {{ st.year }}</p>
+                  {% endfor %}
+                  {% for exam in exam_details %}
+                  <p class="detail-fields"> Exam Name: {{ exam.exam_name }}</p>
+                  {% endfor %}
+              </div>
+              <div class="col-sm-4">
+                <!-- <p class="timer">Duration: </p>
+                <p id="demo" class="timer"> </p> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class='container-fluid qs-container'>
+            <div class="row qs-row">
+                <div class="col-sm-8 page-wrapper">
+                  <div class="card-body">
+                    <div>
+                             
+                            {% for qs,ans in question_set.items %}
+                            <div class="qs" id="{{ forloop.counter }}">
+                                <p class="display-4 qs-no">Question No: {{ forloop.counter }}</p>
+                                <hr>
+                                <br>
+                                <p class="display-4 ques" id="{{ qs.id }}">{{ forloop.counter }}) {{ qs }}</p>
+                                {% for aaa in ans %}
+                                    <div class="answer {{ qs.id }}">
+                                    <p >  {{ forloop.counter }})  {{ aaa }}</p><br>
+                                  </div>
+                                {% endfor %}
+                            </div>
+                            {% empty %}
+                                <p> No questions </p>
+                            {% endfor %}
+                            </div>
+                  </div>
+                      <div class="qs-buttons">
+                        <button id="btn-left" class="btn btn-secondary btn-left" onclick="plusDivs(-1)">&#10094; Previous</button>
+                      <button id="btn-right" class="btn btn-secondary btn-right" onclick="plusDivs(1)">Next &#10095;</button>
+                    </div>
+                    </div>
+                  <div class="col-sm-3 offset-sm-1 mymdb-sidebar">
+                      
+                  </div>
+              </div>
+          </div>
+      </body> 
+
+      <script>
+        
+        function markAnswer(qs_id, wrong_ans, correct_ans) {
+            x = document.getElementsByClassName(qs_id);
+            x[wrong_ans].style.backgroundColor = "#ff4154";  
+            x[correct_ans].style.backgroundColor = "#25f955";
+        }
+
+            var qs_id = ""
+            var x = ""
+            var i =""
+            {% for ans, cans in answer %}
+                qs_id = {{ans.qs_id}}                
+                x = {{ ans.choice_id }} -1
+                i = {{ cans }} -1   
+                markAnswer(qs_id, x, i)            
+            {% endfor %}
+        
+  //Slideshow creator
+  var slideIndex = 1;
+  showDivs(slideIndex);
+  
+  function plusDivs(n) {
+    showDivs(slideIndex += n);
+  }
+  
+  function showDivs(n) {
+    var i;
+    var x = document.getElementsByClassName("qs");
+    if (n > x.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = x.length}
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";  
+    }
+
+    if ( document.getElementById("btn-right").classList.contains('disabled') ) {
+      document.getElementById("btn-right").classList.remove('disabled');
+    }
+
+    if (n==x.length ||  n == 0) {
+      document.getElementById("btn-right").classList.add('disabled');
+    }
+
+    if ( document.getElementById("btn-left").classList.contains('disabled') ) {
+      document.getElementById("btn-left").classList.remove('disabled');
+    }
+
+    if (n==1) {
+      document.getElementById("btn-left").classList.add('disabled');
+    }
+
+    
+    x[slideIndex-1].style.display = "block";  
+  }
+
+
+    
+      </script>
+  </html>
+
+

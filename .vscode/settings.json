@@ -1,0 +1,6 @@
+{
+    "python.linting.enabled": false,
+    "javascript.validate.enable": false,
+    "javascript.format.enable": false,
+    "html.validate.scripts": false
+}
